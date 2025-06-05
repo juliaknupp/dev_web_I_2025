@@ -63,3 +63,12 @@ if ($usuario_encontrado) {
     header('Location: index.php?erro=Credenciais inválidas');
     exit();
 }
+
+// com array filter para substituir o foreach
+$usuario_encontrado = array_filter($usuarios, function($usuario) use ($email, $senha, $data_nascimento) {
+    return $usuario['email'] === $email && 
+           $usuario['senha'] === $senha && 
+           $usuario['data_nascimento'] === $data_nascimento;
+});
+
+$usuario_encontrado = reset($usuario_encontrado);
