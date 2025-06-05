@@ -83,3 +83,25 @@ $alunos = isset($_SESSION['alunos'][$email_usuario]) ? $_SESSION['alunos'][$emai
     </div>
 </body>
 </html>
+
+// array map 
+<?php
+$alunos_formatados = array_map(function($aluno) {
+    // Cálculos e formatações aqui
+    return [
+        'nome' => htmlspecialchars($aluno['nome']),
+        // outros campos formatados...
+    ];
+}, $alunos);
+?>
+
+//array filter 
+<?php
+$filtro_objetivo = $_GET['objetivo'] ?? null;
+
+if ($filtro_objetivo) {
+    $alunos = array_filter($alunos, function($aluno) use ($filtro_objetivo) {
+        return $aluno['objetivo'] === $filtro_objetivo;
+    });
+}
+?>
