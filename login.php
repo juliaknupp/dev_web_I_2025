@@ -1,74 +1,126 @@
-<?php
-session_start();
-
-// Array de usuários pré-definidos
-$usuarios = [
-    [
-        'email' => 'admin@academia.com',
-        'nome' => 'Administrador',
-        'senha' => 'admin123',
-        'data_nascimento' => '1980-01-01'
-    ],
-    [
-        'email' => 'instrutor@academia.com',
-        'nome' => 'Instrutor',
-        'senha' => 'instrutor123',
-        'data_nascimento' => '1990-05-15'
-    ],
-    [
-        'email' => 'recepcao@academia.com',
-        'nome' => 'Recepcionista',
-        'senha' => 'recepcao123',
-        'data_nascimento' => '1995-10-20'
-    ]
-];
-
-$email = $_POST['email'] ?? '';
-$senha = $_POST['senha'] ?? '';
-$data_nascimento = $_POST['data_nascimento'] ?? '';
-
-$usuario_encontrado = null;
-
-foreach ($usuarios as $usuario) {
-    if ($usuario['email'] === $email && 
-        $usuario['senha'] === $senha && 
-        $usuario['data_nascimento'] === $data_nascimento) {
-        $usuario_encontrado = $usuario;
-        break;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login-Knupp & Co.</title>
+</head>
+<body>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
-if ($usuario_encontrado) {
-    // Calcula a idade
-    $data_nasc = new DateTime($usuario_encontrado['data_nascimento']);
-    $hoje = new DateTime();
-    $idade = $hoje->diff($data_nasc)->y;
-    
-    // Armazena na sessão
-    $_SESSION['usuario'] = [
-        'nome' => $usuario_encontrado['nome'],
-        'email' => $usuario_encontrado['email'],
-        'idade' => $idade
-    ];
-    
-    // Inicializa array de alunos se não existir
-    if (!isset($_SESSION['alunos'])) {
-        $_SESSION['alunos'] = [];
-    }
-    
-    // Redireciona para listagem
-    header('Location: listagem.php');
-    exit();
-} else {
-    header('Location: index.php?erro=Credenciais inválidas');
-    exit();
+body {
+    background-color: #fffaf5;
+    color: #3e2723;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
-// com array filter para substituir o foreach
-$usuario_encontrado = array_filter($usuarios, function($usuario) use ($email, $senha, $data_nascimento) {
-    return $usuario['email'] === $email && 
-           $usuario['senha'] === $senha && 
-           $usuario['data_nascimento'] === $data_nascimento;
-});
+h1 {
+    color: #4e342e;
+    margin-bottom: 20px;
+}
 
-$usuario_encontrado = reset($usuario_encontrado);
+form {
+    background-color: #efebe9;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 280px;
+}
+
+label {
+    font-weight: bold;
+    color: #5d4037;
+    margin-bottom: 4px;
+    display: block;
+}
+
+input[type="email"],
+input[type="text"] {
+    padding: 10px;
+    border: 2px solid #a1887f;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #3e2723;
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+
+input[type="email"]:focus,
+input[type="text"]:focus {
+    border-color: #6d4c41;
+    outline: none;
+}
+
+button {
+    padding: 12px;
+    background-color: #6d4c41;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #4e342e;
+    transform: scale(1.05);
+}
+
+p {
+    margin-top: 15px;
+    text-align: center;
+}
+
+p a {
+    color: #6d4c41;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    color: #3e2723;
+    text-decoration: underline;
+}
+
+        </style>
+    <h1>Login</h1>
+    <form action="" method="post">
+        <label>Email </label><input type="email" name="email">
+        <label>Senha </label><input type="text" name="senha">
+        <button>Logar</button>
+    </form>
+    <p><a href="../usuarios/cadastro_usuarios.php">Cadastre-se</a></p>
+    <?php
+
+        session_start();
+        include("../../service/usuario.service.php");
+        if (!isset($_SESSION["login"])) $_SESSION["login"] = [];
+        $email = isset($_POST["email"]) ? $_POST["email"] : null;
+        $senha = isset($_POST["senha"]) ? $_POST["senha"] : null;
+        $array = arrayUsuario();
+        foreach($array as $user) {
+            if ($user->email == $email && $user->senha == $senha) {
+                $_SESSION["login"]["email"] = $email;
+                $_SESSION["login"]["senha"] = $senha;
+                $_SESSION["login"]["nome"] = $user->nome;
+                header('Location: index.php');
+                exit;
+            }
+        }
+    ?>
+</body>
+</html>
