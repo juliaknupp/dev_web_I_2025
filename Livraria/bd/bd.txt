@@ -1,0 +1,42 @@
+create database bibliotecabd;
+
+create table livro (
+  idliv bigint primary key not null auto_increment,
+  titulo varchar(60),
+  autor varchar(60),
+  editora varchar(60),
+  anoPublicacao year,
+  genero varchar(45),
+  localizacao varchar(100),
+  ISSN varchar(100),
+  disponibilidade enum("Sim", "Não")
+);
+
+INSERT INTO livro (ISSN, titulo, autor, editora, anoPublicacao, genero, localizacao, disponibilidade) VALUES
+('1001', 'Dom Casmurro', 'Machado de Assis', 'Nova Fronteira', 1899, 'Romance', '1-A', "Sim"),
+('1002', 'O Cortiço', 'Aluísio Azevedo', 'Saraiva', 1890, 'Naturalismo', '1-B', "Sim"),
+('1003', 'Iracema', 'José de Alencar', 'Ática', 1865, 'Romance', '1-C', "Sim"),
+('1004', 'A Moreninha', 'Joaquim Manuel de Macedo', 'L&PM', 1844, 'Romance', '1-D', "Sim"),
+('1005', 'Memórias Póstumas de Brás Cubas', 'Machado de Assis', 'Companhia das Letras', 1881, 'Realismo', '1-E', "Sim"),
+('1006', 'O Alienista', 'Machado de Assis', 'Martin Claret', 1882, 'Sátira', '2-A', "Sim"),
+('1007', 'Capitães da Areia', 'Jorge Amado', 'Record', 1937, 'Romance', '2-B', "Sim"),
+('1008', 'Gabriela, Cravo e Canela', 'Jorge Amado', 'Record', 1958, 'Romance', '2-C', "Sim"),
+('1009', 'Grande Sertão: Veredas', 'Guimarães Rosa', 'Globo', 1956, 'Literatura Brasileira', '2-D', "Sim"),
+('1010', 'Vidas Secas', 'Graciliano Ramos', 'Record', 1938, 'Realismo', '2-E', "Sim"),
+('1011', 'Senhora', 'José de Alencar', 'Martin Claret', 1875, 'Romance', '3-A', "Sim"),
+('1012', 'O Guarani', 'José de Alencar', 'Ática', 1857, 'Romance', '3-B', "Sim"),
+('1013', 'A Escrava Isaura', 'Bernardo Guimarães', 'Saraiva', 1875, 'Romance', '3-C', "Sim"),
+('1014', 'Triste Fim de Policarpo Quaresma', 'Lima Barreto', 'Penguin', 1915, 'Sátira', '3-D', "Sim"),
+('1015', 'Mar Morto', 'Jorge Amado', 'Record', 1936, 'Romance', '3-E', "Sim"),
+('1016', 'Sagarana', 'Guimarães Rosa', 'Nova Fronteira', 1946, 'Contos', '4-A', "Sim"),
+('1017', 'Fogo Morto', 'José Lins do Rego', 'José Olympio', 1943, 'Regionalismo', '4-B', "Sim"),
+('1018', 'A Hora da Estrela', 'Clarice Lispector', 'Rocco', 1977, 'Ficção', '4-C', "Sim"),
+('1019', 'O Primo Basílio', 'Eça de Queirós', 'Martin Claret', 1878, 'Realismo', '4-D', "Sim"),
+('1020', 'Os Maias', 'Eça de Queirós', 'Globo', 1888, 'Realismo', '4-E', "Sim");
+
+create table usuarios (
+  id bigint primary key auto_increment not null,
+  nome varchar(60),
+  email varchar(60),
+  senha varchar(60)
+);
