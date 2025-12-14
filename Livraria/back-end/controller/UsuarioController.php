@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/GenericController.php";
+require_once __DIR__ . "/genericController.php";
 require_once __DIR__ . "/../model/usuario.class.php";
 class UsuarioController implements GenericController{
     private $conn;
