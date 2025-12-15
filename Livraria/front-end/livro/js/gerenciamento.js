@@ -105,7 +105,7 @@ function resetarDiv(div) {
  * exemplares que satisfizerem a condição
  */
 async function consultarLivros() {
-  const url = "http://localhost/livraria/back/index.php?modulo=livro";
+  const url = "http://localhost/livraria/back-end/tindex.php?modulo=livro";
   const response = await fetch(url);
   const livros = await response.json();
   const div = document.querySelector("#saidaBusca");
@@ -119,7 +119,7 @@ async function consultarLivros() {
  * Função que deverá listar na tela todos os livros do acervo
  */
 async function listarTodos() {
-  const url = "http://localhost/livraria/back/index.php?modulo=livro";
+  const url = "http://localhost/livraria/back-end/index.php?modulo=livro";
   const response = await fetch(url);
   const livros = await response.json();
   const div = document.querySelector("#saidaBusca");
